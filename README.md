@@ -1,18 +1,162 @@
-# House Price Prediction using Machine Learning
+# 🏠 House Price Prediction using Machine Learning
 
-# Project Overview
+## 📌 Project Overview
+
 This project is a Machine Learning-based House Price Prediction application.
 
 The objective is to build a complete end-to-end Machine Learning workflow that takes historical house data, performs exploratory data analysis and preprocessing, trains and compares multiple regression models, selects the best-performing model, and deploys the final model through a Streamlit web application.
 
 The application allows a user to enter house characteristics such as number of bedrooms, bathrooms, living area, lot area, location, and other property details and receive an estimated house price.
 
+---
 
-## Getting started
+## 🎯 Objective
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+The main objectives of this project are:
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+- Understand and explore a real-world house price dataset.
+- Perform Exploratory Data Analysis (EDA).
+- Identify relevant features for predicting house prices.
+- Handle missing values and categorical variables.
+- Apply appropriate feature preprocessing.
+- Train multiple Machine Learning regression models.
+- Compare model performance using evaluation metrics.
+- Select the best-performing model.
+- Create a reusable Machine Learning pipeline.
+- Save the trained pipeline for future predictions.
+- Build and deploy a user-friendly Streamlit application.
+
+---
+
+## 📊 Dataset
+
+The project uses a house price dataset containing information about residential properties.
+
+The dataset includes features such as:
+
+- `bedrooms` – Number of bedrooms
+- `bathrooms` – Number of bathrooms
+- `sqft_living` – Living area in square feet
+- `sqft_lot` – Lot area in square feet
+- `floors` – Number of floors
+- `waterfront` – Whether the property has a waterfront
+- `view` – View rating
+- `condition` – Property condition
+- `sqft_above` – Above-ground living area
+- `sqft_basement` – Basement area
+- `yr_built` – Year the house was built
+- `yr_renovated` – Year the house was renovated
+- `street` – Street address
+- `city` – City
+- `statezip` – State and ZIP code
+- `price` – Target variable
+
+The target variable for this project is:
+
+`price`
+
+---
+
+## 🔎 Exploratory Data Analysis (EDA)
+
+Exploratory Data Analysis was performed before building the Machine Learning models.
+
+The analysis included:
+
+- Understanding the structure of the dataset.
+- Checking data types.
+- Identifying missing values.
+- Examining numerical features.
+- Examining categorical features.
+- Understanding the distribution of house prices.
+- Analyzing relationships between important features and house prices.
+- Identifying potential outliers.
+- Evaluating correlations between numerical variables.
+
+EDA was used to help determine which features should be retained, transformed, or removed before model training.
+
+---
+
+## 🧩 Features Used
+
+### Numerical Features
+
+The following numerical features were used:
+
+- `bedrooms`
+- `bathrooms`
+- `sqft_living`
+- `sqft_lot`
+- `floors`
+- `waterfront`
+- `view`
+- `condition`
+- `sqft_above`
+- `sqft_basement`
+- `yr_built`
+- `yr_renovated`
+
+### Categorical Features
+
+The following categorical features were used:
+
+- `street`
+- `city`
+- `statezip`
+
+The following columns were excluded from the model:
+
+- `date`
+- `price` – target variable
+- `country`
+
+---
+
+## ⚙️ Data Preprocessing
+
+The dataset contains both numerical and categorical features, so different preprocessing techniques were applied.
+
+### Numerical Features
+
+For numerical features:
+
+1. Missing values were handled using `SimpleImputer`.
+2. Features were standardized using `StandardScaler`.
+
+The preprocessing was implemented using a Scikit-learn `Pipeline`.
+
+### Categorical Features
+
+Categorical features were transformed using:
+
+`OneHotEncoder`
+
+with:
+
+`handle_unknown='ignore'`
+
+This allows the model to handle previously unseen categorical values during prediction.
+
+### ColumnTransformer
+
+A `ColumnTransformer` was used to apply the appropriate preprocessing to numerical and categorical features.
+
+The overall preprocessing structure is:
+
+```text
+Numerical Features
+       ↓
+SimpleImputer
+       ↓
+StandardScaler
+       ↓
+Processed Numerical Features
+
+Categorical Features
+       ↓
+OneHotEncoder
+       ↓
+Processed Categorical Features
 
 ## Add your files
 
