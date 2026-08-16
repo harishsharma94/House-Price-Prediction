@@ -100,7 +100,6 @@ The following numerical features were used:
 
 The following categorical features were used:
 
-- `street`
 - `city`
 - `statezip`
 
@@ -109,6 +108,7 @@ The following columns were excluded from the model:
 - `date`
 - `price` – target variable
 - `country`
+- 'street'
 
 ---
 
@@ -158,86 +158,207 @@ OneHotEncoder
        ↓
 Processed Categorical Features
 
-## Add your files
+🤖 Models Compared
 
-* [Create](https://docs.gitlab.com/user/project/repository/web_editor/#create-a-file) or [upload](https://docs.gitlab.com/user/project/repository/web_editor/#upload-a-file) files
-* [Add files using the command line](https://docs.gitlab.com/topics/git/add_files/#add-files-to-a-git-repository) or push an existing Git repository with the following command:
+Three regression models were evaluated:
 
-```
-cd existing_repo
-git remote add origin https://gitlab.com/harishsharma94/house-price-prediction.git
-git branch -M main
-git push -uf origin main
-```
+1. Linear Regression
 
-## Integrate with your tools
+A simple baseline regression model used to establish a starting point for performance.
 
-* [Set up project integrations](https://gitlab.com/harishsharma94/house-price-prediction/-/settings/integrations)
+2. Random Forest Regressor
 
-## Collaborate with your team
+An ensemble model that combines multiple decision trees to improve prediction performance and reduce overfitting.
 
-* [Invite team members and collaborators](https://docs.gitlab.com/user/project/members/)
-* [Create a new merge request](https://docs.gitlab.com/user/project/merge_requests/creating_merge_requests/)
-* [Automatically close issues from merge requests](https://docs.gitlab.com/user/project/issues/managing_issues/#closing-issues-automatically)
-* [Enable merge request approvals](https://docs.gitlab.com/user/project/merge_requests/approvals/)
-* [Set auto-merge](https://docs.gitlab.com/user/project/merge_requests/auto_merge/)
+3. Gradient Boosting Regressor
 
-## Test and Deploy
+An ensemble technique that builds models sequentially, with each new model attempting to improve the errors made by previous models.
 
-Use the built-in continuous integration in GitLab.
+📈 Model Evaluation
 
-* [Get started with GitLab CI/CD](https://docs.gitlab.com/ci/quick_start/)
-* [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/user/application_security/sast/)
-* [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/topics/autodevops/requirements/)
-* [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/user/clusters/agent/)
-* [Set up protected environments](https://docs.gitlab.com/ci/environments/protected_environments/)
+The models were evaluated using the following metrics:
 
-***
+Mean Absolute Error (MAE)
 
-# Editing this README
+Measures the average absolute difference between the actual and predicted house prices.
 
-When you're ready to make this README your own, just edit this file and use the handy template below (or feel free to structure it however you want - this is just a starting point!). Thanks to [makeareadme.com](https://www.makeareadme.com/) for this template.
+Lower MAE is better.
 
-## Suggestions for a good README
+Root Mean Squared Error (RMSE)
 
-Every project is different, so consider which of these sections apply to yours. The sections used in the template are suggestions for most open source projects. Also keep in mind that while a README can be too long and detailed, too long is better than too short. If you think your README is too long, consider utilizing another form of documentation rather than cutting out information.
+Measures prediction error while giving greater weight to larger errors.
 
-## Name
-Choose a self-explaining name for your project.
+Lower RMSE is better.
 
-## Description
-Let people know what your project can do specifically. Provide context and add a link to any reference visitors might be unfamiliar with. A list of Features or a Background subsection can also be added here. If there are alternatives to your project, this is a good place to list differentiating factors.
+R² Score
 
-## Badges
-On some READMEs, you may see small images that convey metadata, such as whether or not all the tests are passing for the project. You can use Shields to add some to your README. Many services also have instructions for adding a badge.
+Measures how much of the variation in house prices is explained by the model.
 
-## Visuals
-Depending on what you are making, it can be a good idea to include screenshots or even a video (you'll frequently see GIFs rather than actual videos). Tools like ttygif can help, but check out Asciinema for a more sophisticated method.
+Higher R² is better.
 
-## Installation
-Within a particular ecosystem, there may be a common way of installing things, such as using Yarn, NuGet, or Homebrew. However, consider the possibility that whoever is reading your README is a novice and would like more guidance. Listing specific steps helps remove ambiguity and gets people to using your project as quickly as possible. If it only runs in a specific context like a particular programming language version or operating system or has dependencies that have to be installed manually, also add a Requirements subsection.
+The models were compared using these metrics, and the best-performing model was selected based on the overall results.
 
-## Usage
-Use examples liberally, and show the expected output if you can. It's helpful to have inline the smallest example of usage that you can demonstrate, while providing links to more sophisticated examples if they are too long to reasonably include in the README.
+🏆 Best Model
 
-## Support
-Tell people where they can go to for help. It can be any combination of an issue tracker, a chat room, an email address, etc.
+After comparing the models, Linear Regression was selected as the final model based on the evaluation results obtained during model comparison.
 
-## Roadmap
-If you have ideas for releases in the future, it is a good idea to list them in the README.
+The final model was integrated with the preprocessing steps into a single Machine Learning pipeline.
 
-## Contributing
-State if you are open to contributions and what your requirements are for accepting them.
+The pipeline contains:
 
-For people who want to make changes to your project, it's helpful to have some documentation on how to get started. Perhaps there is a script that they should run or some environment variables that they need to set. Make these steps explicit. These instructions could also be useful to your future self.
+Input Data
+    ↓
+SimpleImputer
+    ↓
+StandardScaler / OneHotEncoder
+    ↓
+Linear Regression
+    ↓
+Predicted House Price
+💾 Model Pipeline
 
-You can also document commands to lint the code or run tests. These steps help to ensure high code quality and reduce the likelihood that the changes inadvertently break something. Having instructions for running tests is especially helpful if it requires external setup, such as starting a Selenium server for testing in a browser.
+The complete preprocessing and Machine Learning model were saved as a single pipeline using joblib.
 
-## Authors and acknowledgment
-Show your appreciation to those who have contributed to the project.
+The saved model is located at:
 
-## License
-For open source projects, say how it is licensed.
+models/house_price_pipeline.pkl
 
-## Project status
-If you have run out of energy or time for your project, put a note at the top of the README saying that development has slowed down or stopped completely. Someone may choose to fork your project or volunteer to step in as a maintainer or owner, allowing your project to keep going. You can also make an explicit request for maintainers.
+Saving the complete pipeline ensures that the same preprocessing applied during model training is automatically applied when making predictions on new data.
+
+🌐 Streamlit Application
+
+A Streamlit application was created to provide a simple user interface for the trained Machine Learning model.
+
+The user can enter information such as:
+
+Bedrooms
+Bathrooms
+Living area
+Lot area
+Floors
+Waterfront
+View
+Condition
+Basement area
+Year built
+Year renovated
+City
+State/ZIP
+
+The application then passes the user input through the saved Machine Learning pipeline and displays the predicted house price.
+
+Application Flow
+User Input
+    ↓
+Streamlit Application
+    ↓
+Saved ML Pipeline
+    ↓
+Preprocessing
+    ↓
+Linear Regression Model
+    ↓
+Predicted House Price
+▶️ How to Run the Application
+1. Clone the repository
+git clone <your-gitlab-repository-url>
+2. Navigate to the project
+cd house-price-prediction
+3. Install required libraries
+pip install -r requirements.txt
+4. Run the Streamlit application
+streamlit run app/app.py
+
+The application will open in your browser.
+
+📁 Project Structure
+house-price-prediction/
+│
+├── app/
+│   └── app.py
+│
+├── data/
+│   └── raw/
+│       └── house_data.csv
+│
+├── models/
+│   └── house_price_pipeline.pkl
+│
+├── notebooks/
+│   └── house_price_prediction.ipynb
+│
+├── src/
+│
+├── .gitignore
+├── requirements.txt
+└── README.md
+🖥️ Application Screenshots
+House Price Prediction Application
+
+Add screenshots of the Streamlit application here.
+
+For example:
+
+![Streamlit Application](screenshots/house_price_app.png)
+🛠️ Technologies Used
+Python
+Pandas
+NumPy
+Matplotlib
+Seaborn
+Scikit-learn
+Joblib
+Streamlit
+Git / GitLab
+Jupyter Notebook
+🚀 Future Improvements
+
+Potential future improvements include:
+
+Hyperparameter tuning.
+Additional Machine Learning models.
+Improved feature engineering.
+More advanced model evaluation.
+Better handling of outliers.
+Model explainability.
+Cloud deployment.
+API-based model serving using FastAPI.
+Automated model retraining.
+Monitoring model performance after deployment.
+👨‍💻 Author
+
+Harish Sharma
+
+Machine Learning Project – House Price Prediction
+
+📌 Key Learning
+
+This project demonstrates an end-to-end Machine Learning workflow:
+
+Data Collection
+      ↓
+Data Exploration
+      ↓
+EDA
+      ↓
+Feature Selection
+      ↓
+Train/Test Split
+      ↓
+Data Preprocessing
+      ↓
+Model Training
+      ↓
+Model Comparison
+      ↓
+Model Selection
+      ↓
+Pipeline Creation
+      ↓
+Model Evaluation
+      ↓
+Model Persistence
+      ↓
+Streamlit Deployment
+
+The project demonstrates how a Machine Learning model can be taken from raw data all the way to a working application.
